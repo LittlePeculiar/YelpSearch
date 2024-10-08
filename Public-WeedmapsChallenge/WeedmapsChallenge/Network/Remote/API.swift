@@ -50,6 +50,11 @@ extension API {
                 }
                 switch response.statusCode {
                 case 200...299:
+                    let str = String(decoding: result.data, as: UTF8.self)
+                    print("************")
+                    print("payload: \(payloadType)")
+                    print("rawData: \(str)")
+                    print("************")
                     guard let decodedResponse = try? decoder.decode(payloadType, from: result.data) else {
                         return .failure(.decodingError)
                     }
@@ -68,9 +73,10 @@ extension API {
     
     private func getUrlRequest(endpoint: APIEndpoint, method: Method) throws -> URLRequest? {
         var headers: [String: String] = [:]
-        headers["Content-Type"] = "application/json"
         headers["Authorization"] = "Bearer \(Constants.apiKey)"
+        headers["accept"] = "application/json"
 
+        print("headers: \(headers)")
         print("path: \(endpoint.path)")
         guard let url = URL(string: endpoint.path) else {
             throw APIError.badUrl

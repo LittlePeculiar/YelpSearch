@@ -10,15 +10,16 @@ struct BusinessResponse: Codable {
 
 struct Business: Codable {
     let name: String
-    let rating: Int
+    let rating: Double
     let categories: [Category]
     let phone: String?
     let price: String?
+    let url: String?
     let imageURL: String
     let isClosed: Bool
     
     private enum CodingKeys: String, CodingKey {
-        case name, rating, categories, phone, price, imageURL = "image_url", isClosed = "is_closed"
+        case name, rating, categories, phone, price, url, imageURL = "image_url", isClosed = "is_closed"
     }
 }
 

@@ -12,13 +12,26 @@ class HomeViewController: UIViewController {
     @IBOutlet private var collectionView: UICollectionView!
     
     private var searchController = UISearchController(searchResultsController: nil)
-    private var searchResults = [Business]()
-    private var searchDataTask: URLSessionDataTask?
+    private let viewModel = HomeViewModel()
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupBinding()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        Task {
+            await viewModel.getCurrentLocation()
+        }
+    }
+    
+    private func setupBinding() {
+        
     }
 }
 

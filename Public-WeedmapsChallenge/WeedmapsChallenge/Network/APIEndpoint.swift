@@ -11,8 +11,7 @@ import Foundation
 // MARK: defines all endpoints used in app
 
 enum APIEndpoint: Hashable {
-    case searchBy(latitude: Double, longitude: Double)
-    case search(_ term: String)
+    case searchBy(term: String, latitude: Double, longitude: Double)
 }
 
 extension APIEndpoint {
@@ -22,10 +21,8 @@ extension APIEndpoint {
     
     var path: String {
         switch self {
-        case .searchBy(let latitude, let longitude):
-            return "\(baseUrl)matches?latitude=\(latitude)&longitude=\(longitude)&limit=15&match_threshold=default"
-        case let .search(term):
-            return "\(baseUrl)search?term=\(term)&sort_by=best_match&limit=15"
+        case .searchBy(let term, let latitude, let longitude):
+            return "\(baseUrl)search?term=\(term)&latitude=\(latitude)&longitude=\(longitude)&limit=20"
         }
     }
 }
