@@ -19,6 +19,12 @@
 		5ABB14BE2167D2D900A2CB2C /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB14BD2167D2D900A2CB2C /* BusinessCell.swift */; };
 		5ABB14C02167D31100A2CB2C /* BusinessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB14BF2167D31100A2CB2C /* BusinessCell.xib */; };
 		5ABB14C42167D51000A2CB2C /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB14C32167D51000A2CB2C /* Home.storyboard */; };
+		A079B8992CB5929900C3B64E /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8982CB5929900C3B64E /* APIEndpoint.swift */; };
+		A079B89C2CB59AD100C3B64E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B89B2CB59AD100C3B64E /* Constants.swift */; };
+		A079B89F2CB59EC100C3B64E /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B89E2CB59EC100C3B64E /* APIError.swift */; };
+		A079B8A12CB59EF400C3B64E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8A02CB59EF400C3B64E /* APIService.swift */; };
+		A079B8A32CB5A04400C3B64E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8A22CB5A04400C3B64E /* API.swift */; };
+		A079B8A52CB5A3DA00C3B64E /* MockAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8A42CB5A3DA00C3B64E /* MockAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +63,12 @@
 		5ABB14BD2167D2D900A2CB2C /* BusinessCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		5ABB14BF2167D31100A2CB2C /* BusinessCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BusinessCell.xib; sourceTree = "<group>"; };
 		5ABB14C32167D51000A2CB2C /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		A079B8982CB5929900C3B64E /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		A079B89B2CB59AD100C3B64E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A079B89E2CB59EC100C3B64E /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		A079B8A02CB59EF400C3B64E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		A079B8A22CB5A04400C3B64E /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		A079B8A42CB5A3DA00C3B64E /* MockAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +119,7 @@
 		5ABB147B2167C42300A2CB2C /* WeedmapsChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				A079B8952CB591B700C3B64E /* Network */,
 				5ABB14B12167C65000A2CB2C /* Assets */,
 				5ABB14AE2167C62400A2CB2C /* Sources */,
 			);
@@ -144,6 +157,7 @@
 		5ABB14AE2167C62400A2CB2C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				A079B89A2CB59AC100C3B64E /* Shared */,
 				5ABB14B32167C6DA00A2CB2C /* Business */,
 				5ABB14AF2167C63000A2CB2C /* Bootstrap */,
 				5ABB14AC2167C5DD00A2CB2C /* Home */,
@@ -194,6 +208,42 @@
 				5ABB14BF2167D31100A2CB2C /* BusinessCell.xib */,
 			);
 			path = Business;
+			sourceTree = "<group>";
+		};
+		A079B8952CB591B700C3B64E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				A079B8972CB5926700C3B64E /* Remote */,
+				A079B8962CB5926000C3B64E /* Mock */,
+				A079B8A02CB59EF400C3B64E /* APIService.swift */,
+				A079B8982CB5929900C3B64E /* APIEndpoint.swift */,
+				A079B89E2CB59EC100C3B64E /* APIError.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		A079B8962CB5926000C3B64E /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A079B8A42CB5A3DA00C3B64E /* MockAPI.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		A079B8972CB5926700C3B64E /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				A079B8A22CB5A04400C3B64E /* API.swift */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		A079B89A2CB59AC100C3B64E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A079B89B2CB59AD100C3B64E /* Constants.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,9 +383,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				5ABB14BE2167D2D900A2CB2C /* BusinessCell.swift in Sources */,
+				A079B8992CB5929900C3B64E /* APIEndpoint.swift in Sources */,
+				A079B8A52CB5A3DA00C3B64E /* MockAPI.swift in Sources */,
 				5ABB14B52167C6EB00A2CB2C /* Business.swift in Sources */,
 				5ABB147D2167C42300A2CB2C /* AppDelegate.swift in Sources */,
+				A079B8A32CB5A04400C3B64E /* API.swift in Sources */,
+				A079B89C2CB59AD100C3B64E /* Constants.swift in Sources */,
+				A079B89F2CB59EC100C3B64E /* APIError.swift in Sources */,
 				5ABB147F2167C42300A2CB2C /* HomeViewController.swift in Sources */,
+				A079B8A12CB59EF400C3B64E /* APIService.swift in Sources */,
 				5ABB14BC2167CF2400A2CB2C /* HomeDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,7 +499,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -499,7 +555,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -516,14 +572,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S9UES6HSTC;
 				INFOPLIST_FILE = "$(SRCROOT)/WeedmapsChallenge/Assets/Plists/WeedmapsChallenge-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.weedmaps.WeedmapsChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -534,14 +594,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S9UES6HSTC;
 				INFOPLIST_FILE = "$(SRCROOT)/WeedmapsChallenge/Assets/Plists/WeedmapsChallenge-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.weedmaps.WeedmapsChallenge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
