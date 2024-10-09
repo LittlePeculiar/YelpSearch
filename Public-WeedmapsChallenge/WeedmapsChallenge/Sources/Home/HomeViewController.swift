@@ -3,22 +3,24 @@
 //
 
 import UIKit
-
+import Combine
 
 class HomeViewController: UIViewController {
 
     // MARK: Properties
-    
-    @IBOutlet private var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var searchController = UISearchController(searchResultsController: nil)
     private let viewModel = HomeViewModel()
+    private var disposeBag = [AnyCancellable]()
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        registerCells()
         setupBinding()
     }
     
@@ -30,9 +32,59 @@ class HomeViewController: UIViewController {
         }
     }
     
-    private func setupBinding() {
+    private func registerCells() {
+        BusinessCell.registerWith(tableView: tableView)
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
     }
+    
+    private func setupBinding() {
+        viewModel.$businesses
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.tableView.reloadData()
+            }
+            .store(in: &disposeBag)
+        
+        viewModel.$isLoading
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isLoading in
+                self?.refreshActivityIndicator(isLoading: isLoading)
+            }
+            .store(in: &disposeBag)
+        
+        viewModel.$showError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isError in
+                self?.showError(isError: isError)
+            }
+            .store(in: &disposeBag)
+    }
+    
+    private func setupUI() {
+        self.view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+    }
+    
+    private func refreshActivityIndicator(isLoading: Bool) {
+        view.bringSubviewToFront(activityIndicator)
+        if isLoading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
+    private func showError(isError: Bool) {
+        if isError {
+            // show alert
+        }
+    }
+    
 }
 
 // MARK: UISearchResultsUpdating
@@ -58,16 +110,16 @@ extension HomeViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - Table view data source
+// note: using tableview instead of collectionview per figma
 
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // IMPLEMENT:
-        return 0
+extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.businesses.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        <#code#>
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // IMPLEMENT:
-        return UICollectionViewCell()
-    }
+    
 }

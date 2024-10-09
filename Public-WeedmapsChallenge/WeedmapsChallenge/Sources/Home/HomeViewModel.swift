@@ -17,6 +17,7 @@ class HomeViewModel {
     private var api: APIService = API()
     private var locationManager = LocationManager.shared
     private var coords = Coordinates()
+    var errorMessage: String = ""
     
     init() {
         Task {
@@ -30,8 +31,9 @@ class HomeViewModel {
             self.coords = try await locationManager.getLocation()
             await fetch()
         } catch let error {
-            print("error fetching coords: \(error.localizedDescription)")
+            errorMessage = error.localizedDescription
             showError = true
+            print("error fetching coords: \(errorMessage)")
         }
     }
     
@@ -48,9 +50,10 @@ class HomeViewModel {
             )
             switch results {
             case .failure(let error):
-                print("failed to fetch data: \(error)")
-                self.isLoading = false
-                self.showError = true
+                isLoading = false
+                errorMessage = error.localizedDescription
+                showError = true
+                print("error fetching coords: \(errorMessage)")
                 
             case .success(let result):
                 print("success: \(String(describing: result?.businesses.count)) records")
@@ -64,9 +67,10 @@ class HomeViewModel {
             }
             
         } catch let error {
-            print("error fetching meals: \(error.localizedDescription)")
-            self.isLoading = false
-            self.showError = true
+            isLoading = false
+            errorMessage = error.localizedDescription
+            showError = true
+            print("error fetching coords: \(errorMessage)")
         }
     }
     

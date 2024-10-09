@@ -15,8 +15,8 @@ struct Business: Codable {
     let phone: String?
     let price: String?
     let url: String?
-    let imageURL: String
-    let isClosed: Bool
+    let imageURL: String?
+    let isClosed: Bool?
     
     private enum CodingKeys: String, CodingKey {
         case name, rating, categories, phone, price, url, imageURL = "image_url", isClosed = "is_closed"
