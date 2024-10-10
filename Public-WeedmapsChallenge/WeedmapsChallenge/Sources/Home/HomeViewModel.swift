@@ -60,10 +60,10 @@ class HomeViewModel {
                         resetDisplayData()
                     } else {
                         if offset > 0 {
-                            // fetching more records
-                            businesses.append(contentsOf: data)
-                            displayBusinesses = businesses
+                            // adding more records
+                            displayBusinesses.append(contentsOf: data)
                         } else {
+                            // setting search results
                             displayBusinesses = data
                         }
                     }

@@ -52,7 +52,13 @@ class HomeViewController: UIViewController {
                 guard let self = self else { return }
                 
                 let searching = self.isSearching
-                self.tableView.reloadData()
+                
+                // fixes flickering when loading new rows
+                UIView.performWithoutAnimation {
+                    self.tableView.reloadData()
+                    self.tableView.beginUpdates()
+                    self.tableView.endUpdates()
+                }
                 
                 if businesses.isEmpty {
                     if searching {
@@ -192,7 +198,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             print("we hit the bottom at: \(indexPath)")
             
             Task {
-                // todo: fix flash when new records are loaded
                 self.view.endEditing(true)
                 await viewModel.fetch(searchTerm)
             }
