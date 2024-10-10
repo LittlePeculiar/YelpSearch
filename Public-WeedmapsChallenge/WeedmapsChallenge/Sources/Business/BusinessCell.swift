@@ -9,16 +9,16 @@ protocol BusinessCellDelegate: AnyObject {
 }
 
 class BusinessCell: UITableViewCell {
-    @IBOutlet weak var yelpImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var ratingStackView: UIStackView!
-    @IBOutlet weak var phoneLabel: UILabel!
-    @IBOutlet weak var phoneTitleLabel: UILabel!
-    @IBOutlet weak var isClosedLabel: UILabel!
-    @IBOutlet weak var yelpDescription: UILabel!
-    @IBOutlet weak var phoneNumberView: UIView!
-    @IBOutlet weak var bgView: UIView!
+    @IBOutlet private weak var yelpImageView: UIImageView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var ratingLabel: UILabel!
+    @IBOutlet private weak var ratingStackView: UIStackView!
+    @IBOutlet private weak var phoneLabel: UILabel!
+    @IBOutlet private weak var phoneTitleLabel: UILabel!
+    @IBOutlet private weak var isClosedLabel: UILabel!
+    @IBOutlet private weak var yelpDescription: UILabel!
+    @IBOutlet private weak var phoneNumberView: UIView!
+    @IBOutlet private weak var bgView: UIView!
     
     weak var delegate: BusinessCellDelegate?
     private var phoneNumber: String = ""

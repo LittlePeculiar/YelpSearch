@@ -55,6 +55,7 @@ extension API {
                     }
                     return .success(decodedResponse)
                 default:
+                    print(response.statusCode)
                     return .failure(.httpError(code: response.statusCode))
                 }
             } catch {

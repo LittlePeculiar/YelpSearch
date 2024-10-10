@@ -11,7 +11,7 @@ import Combine
 
 class HomeViewModel {
     @Published var displayBusinesses: [Business] = []
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = false
     @Published var showError: Bool = false
     
     private var locationManager = LocationManager.shared
@@ -20,8 +20,8 @@ class HomeViewModel {
     
     var api: APIService = API()
     var errorMessage: String = "please try again later"
-    var searchTerm: String = ""
     var offset: Int = 0
+    var limit: Int = 20
     
     init() {
         locationManager.delegate = self
@@ -29,8 +29,9 @@ class HomeViewModel {
     
     // fetch api
     @MainActor func fetch(_ term: String = "") async {
+        guard !isLoading else { return }
+        
         do {
-            searchTerm = term
             isLoading = true
             let results = try await api.fetchData(
                 payloadType: BusinessResponse.self,
@@ -38,6 +39,7 @@ class HomeViewModel {
                     term: term,
                     latitude: coords.latitude,
                     longitude: coords.longitude,
+                    limit: limit,
                     offset: offset
                 )
             )
@@ -51,17 +53,18 @@ class HomeViewModel {
             case .success(let result):
                 print("success: \(String(describing: result?.businesses.count)) records")
                 if let data = result?.businesses {
-                    // sort
-                    let new = data.sorted(by: {
-                        return $0.name < $1.name
-                    })
-                    
                     // keep copy for resetting without calling api again
                     if businesses.isEmpty {
-                        businesses = new
+                        businesses = data
                         resetDisplayData()
                     } else {
-                        displayBusinesses = new
+                        if offset > 0 {
+                            // fetching more records
+                            businesses.append(contentsOf: data)
+                            displayBusinesses = businesses
+                        } else {
+                            displayBusinesses = data
+                        }
                     }
                     
                     self.isLoading = false
@@ -77,8 +80,6 @@ class HomeViewModel {
     }
     
     func resetDisplayData() {
-        offset = 0
-        searchTerm = ""
         displayBusinesses = businesses
     }
     

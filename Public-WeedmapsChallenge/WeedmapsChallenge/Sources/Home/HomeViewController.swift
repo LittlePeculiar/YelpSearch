@@ -8,8 +8,8 @@ import Combine
 class HomeViewController: UIViewController {
 
     // MARK: Properties
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var searchController = UISearchController(searchResultsController: nil)
     private let viewModel = HomeViewModel()
@@ -17,6 +17,10 @@ class HomeViewController: UIViewController {
     private var isSearching: Bool {
         let text = self.searchController.searchBar.text ?? ""
         return self.searchController.isActive && !text.isEmpty
+    }
+    private var searchTerm: String {
+        let text = self.searchController.searchBar.text ?? ""
+        return text
     }
     
     // MARK: Lifecycle
@@ -44,12 +48,20 @@ class HomeViewController: UIViewController {
         viewModel.$displayBusinesses
             .receive(on: DispatchQueue.main)
             .sink { [weak self] businesses in
-                let searching = self?.isSearching ?? false
-                if businesses.isEmpty && searching {
-                    let message = "No results found\nPlease try your search again"
-                    self?.showAlert(message: message)
+                guard let self = self else { return }
+                
+                let searching = self.isSearching
+                self.tableView.reloadData()
+                
+                if businesses.isEmpty {
+                    if searching {
+                        let message = "No results found\nPlease try your search again"
+                        self.showAlert(message: message)
+                    }
+                } else {
+                    let indexPath = IndexPath(row: self.viewModel.offset, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
                 }
-                self?.tableView.reloadData()
             }
             .store(in: &disposeBag)
         
@@ -105,6 +117,41 @@ class HomeViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    private func showDetailAlert(business: Business) {
+        let alert = UIAlertController(
+            title: "Visit Site",
+            message: "Please select how you would like to view site details",
+            preferredStyle: .actionSheet
+        )
+        
+        // WKWebView
+        let inApp = UIAlertAction(title: "Stay In App", style: .default) {  [weak self] (_) in
+            self?.loadWebDetails(business: business, webObtion: .openWebkit)
+        }
+        alert.addAction(inApp)
+        
+        // Safari.
+        let safari = UIAlertAction(title: "Use Safari", style: .default) {  [weak self] (_) in
+            self?.loadWebDetails(business: business, webObtion: .openSafari)
+        }
+        alert.addAction(safari)
+        
+        //Cancel
+        let okAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(okAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func loadWebDetails(business: Business, webObtion: WebOption) {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "HomeDetailViewController") as? HomeDetailViewController else { return }
+        
+        vc.viewModel = HomeDetailViewModel(business: business, webObtion: webObtion)
+        vc.modalPresentationStyle = .overFullScreen
+        navigationController?.present(vc, animated: true)
+    }
+    
 }
 
 // MARK: - Table view data source
@@ -130,13 +177,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let business = viewModel.displayBusinesses[indexPath.row]
-        print("selecting: \(business.name)")
+        showDetailAlert(business: business)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             viewModel.offset = viewModel.displayBusinesses.count
-            print("todo: we hit the bottom")
+            print("todo: we hit the bottom at: \(indexPath)")
+            
+            Task {
+                self.view.endEditing(true)
+                await viewModel.fetch(searchTerm)
+            }
         }
     }
     
@@ -161,18 +213,17 @@ extension HomeViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let term = self.searchController.searchBar.text else { return }
-        guard term.count > 2 else {
+        guard searchTerm.count > 2 else {
             let message = "Please enter at least 3 chars to begin search"
-            showAlert(title: title, message: message)
-            self.showAlert(message: message)
+            showAlert(message: message)
             return
         }
         
         // only do search when search button is pressed
         Task {
             self.view.endEditing(true)
-            await viewModel.fetch(term)
+            viewModel.offset = 0
+            await viewModel.fetch(searchTerm)
         }
     }
     

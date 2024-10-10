@@ -10,7 +10,7 @@ class HomeDetailViewController: UIViewController {
 
     // MARK: Properties
     
-    @IBOutlet private var webView: WKWebView!
+    @IBOutlet private weak var webView: WKWebView!
     
     var viewModel: HomeDetailViewModel?
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WebOptions {
+enum WebOption {
     case openSafari, openWebkit
     
     var title: String {
@@ -20,9 +20,11 @@ enum WebOptions {
 }
 
 class HomeDetailViewModel {
-    var businesses: Business
+    @Published var webObtion: WebOption
+    var business: Business
     
-    init(businesses: Business) {
-        self.businesses = businesses
+    init(business: Business, webObtion: WebOption) {
+        self.business = business
+        self.webObtion = webObtion
     }
 }
