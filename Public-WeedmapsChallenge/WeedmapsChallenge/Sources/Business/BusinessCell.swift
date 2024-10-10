@@ -30,7 +30,6 @@ class BusinessCell: UITableViewCell {
         createStars(rating: business.rating)
         
         if let number = business.phone, !number.isEmpty {
-            print("phone: \(number)")
             phoneLabel.text = "\(number.formatPhoneNumber())"
             phoneLabel.textColor = .blue
             phoneNumber = number
@@ -40,6 +39,9 @@ class BusinessCell: UITableViewCell {
         if let isClosed = business.isClosed {
             isClosedLabel.text = isClosed ? "Closed" : "Open"
             isClosedLabel.textColor = isClosed ? .red : .green
+            isClosedLabel.isHidden = false
+        } else {
+            isClosedLabel.isHidden = true
         }
         
         // build yelp business description
@@ -98,7 +100,6 @@ class BusinessCell: UITableViewCell {
                 imageView.tintColor = .systemRed
                 ratingStackView.addArrangedSubview(imageView)
             }
-            
         }
     }
     

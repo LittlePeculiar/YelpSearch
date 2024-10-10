@@ -22,6 +22,7 @@ class HomeViewController: UIViewController {
         
         registerCells()
         setupBinding()
+        setupUI()
     }
     
     private func registerCells() {
@@ -36,9 +37,13 @@ class HomeViewController: UIViewController {
     }
     
     private func setupBinding() {
-        viewModel.$businesses
+        viewModel.$displayBusinesses
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
+            .sink { [weak self] businesses in
+                if businesses.isEmpty {
+                    let message = "No results found\nPlease try your search again"
+                    self?.showAlert(message: message)
+                }
                 self?.tableView.reloadData()
             }
             .store(in: &disposeBag)
@@ -59,7 +64,15 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        self.view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        self.title = "Weedmap Challenge"
+        self.view.backgroundColor = UIColor.red
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search by Term..."
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func refreshActivityIndicator(isLoading: Bool) {
@@ -73,8 +86,17 @@ class HomeViewController: UIViewController {
     
     private func showError(isError: Bool) {
         if isError {
-            // show alert
+            let title = "Oops! Something went wrong!"
+            let message = "please try again later"
+            showAlert(title: title, message: message)
         }
+    }
+    
+    private func showAlert(title: String? = nil, message: String? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
@@ -96,7 +118,7 @@ extension HomeViewController: UISearchResultsUpdating {
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.businesses.count
+        viewModel.displayBusinesses.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,23 +129,55 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.delegate = self
         
-        let business = viewModel.businesses[indexPath.row]
+        let business = viewModel.displayBusinesses[indexPath.row]
         cell.configure(api: viewModel.api, business: business)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let business = viewModel.businesses[indexPath.row]
+        let business = viewModel.displayBusinesses[indexPath.row]
         print("selecting: \(business.name)")
     }
     
     
 }
 
-extension HomeViewController: BusinessCellDelegate {
-    func calling(number: String) {
-        print("todo: calling \(number)")
+// MARK: UISearchBarDelegate
+
+extension HomeViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.resetDisplayData()
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let term = self.searchController.searchBar.text else { return }
+        guard term.count > 2 else {
+            let message = "Please enter at least 3 chars to begin search"
+            showAlert(title: title, message: message)
+            self.showAlert(message: message)
+            return
+        }
+        Task {
+            await viewModel.fetch(term)
+        }
+
+    }
     
+    //This is when the user clicks the 'x' button in the search bar
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            viewModel.resetDisplayData()
+        }
+        
+    }
+    
+}
+
+extension HomeViewController: BusinessCellDelegate {
+    func calling(number: String) {
+        guard let url = URL(string: "tel://\(number)"),
+              UIApplication.shared.canOpenURL(url) else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 }
