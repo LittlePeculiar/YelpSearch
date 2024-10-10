@@ -24,7 +24,6 @@ class BusinessCell: UITableViewCell {
     private var phoneNumber: String = ""
     
     func configure(api: APIService, business: Business) {
-        
         nameLabel.text = business.name
         ratingLabel.text = "Rating:  "
         createStars(rating: business.rating)

@@ -18,12 +18,13 @@ class HomeViewModel {
     private var coords = Coordinates()
     private var businesses: [Business] = []
     
-    var api: APIService = API()
+    var api: APIService
     var errorMessage: String = "please try again later"
     var offset: Int = 0
     var limit: Int = 20
     
-    init() {
+    init(api: APIService = API()) {
+        self.api = api
         locationManager.delegate = self
     }
     

@@ -6,10 +6,16 @@
 //  Copyright © 2024 Weedmaps, LLC. All rights reserved.
 //
 
+/*
+ handles location services authorization and fetching current location
+ used for sending coordinate to api
+ */
+
 import Foundation
 import CoreLocation
 
 protocol LocationManagerDelegate: AnyObject {
+    // notify homeview when coords are set
     func handleLocationUpdates(coords: Coordinates?)
 }
 
@@ -51,6 +57,8 @@ class LocationManager: NSObject, LocationService {
     }
 
 }
+
+// MARK: Location Manager Delegate Methods
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

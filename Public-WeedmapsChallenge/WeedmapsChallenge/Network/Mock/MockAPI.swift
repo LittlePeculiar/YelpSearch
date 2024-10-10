@@ -94,6 +94,24 @@ let mockJson = """
       "phone": "+14159829738",
       "price": "$",
       "rating": 4
+    },
+    {
+      "categories": [
+        {
+          "alias": "pizza",
+          "title": "Pizza"
+        },
+        {
+          "alias": "food",
+          "title": "Food"
+        }
+      ],
+      "image_url": "https://yelp-photos.yelpcorp.com/bphoto/b0mx7p6x9Z1ivb8yzaU3dg/o.jpg",
+      "is_closed": true,
+      "name": "Golden Boy Pizza 2",
+      "phone": "+14159829738",
+      "price": "$",
+      "rating": 4
     }
   ]
 }

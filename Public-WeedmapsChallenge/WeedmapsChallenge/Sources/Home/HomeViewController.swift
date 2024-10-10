@@ -59,9 +59,6 @@ class HomeViewController: UIViewController {
                         let message = "No results found\nPlease try your search again"
                         self.showAlert(message: message)
                     }
-                } else {
-                    let indexPath = IndexPath(row: self.viewModel.offset, section: 0)
-                    self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
                 }
             }
             .store(in: &disposeBag)
@@ -195,6 +192,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             print("we hit the bottom at: \(indexPath)")
             
             Task {
+                // todo: fix flash when new records are loaded
                 self.view.endEditing(true)
                 await viewModel.fetch(searchTerm)
             }
@@ -209,6 +207,7 @@ extension HomeViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         // do not want to call api for each char
+        // will wait for search button tapped
 //        guard let term = searchController.searchBar.text else { return }
     }
 }
@@ -228,7 +227,7 @@ extension HomeViewController: UISearchBarDelegate {
             return
         }
         
-        // only do search when search button is pressed
+        // only do search when search button is tapped
         Task {
             self.view.endEditing(true)
             viewModel.offset = 0

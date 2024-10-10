@@ -6,6 +6,10 @@
 //  Copyright © 2024 Weedmaps, LLC. All rights reserved.
 //
 
+/*
+ Location Service Protocal
+ */
+
 import Foundation
 import CoreLocation
 
@@ -17,7 +21,6 @@ struct Coordinates {
         self.latitude = latitude
         self.longitude = longitude
     }
-    
 }
 
 protocol LocationService {

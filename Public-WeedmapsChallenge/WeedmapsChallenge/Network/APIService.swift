@@ -6,6 +6,10 @@
 //  Copyright © 2024 Weedmaps, LLC. All rights reserved.
 //
 
+/*
+ Network Service Protocal
+ */
+
 import UIKit
 
 protocol APIService {
