@@ -188,6 +188,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             viewModel.offset = viewModel.displayBusinesses.count
+            viewModel.limit = 15
             print("we hit the bottom at: \(indexPath)")
             
             Task {
