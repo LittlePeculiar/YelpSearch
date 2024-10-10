@@ -22,7 +22,7 @@ class HomeDetailViewController: UIViewController {
         }
     }
     
-    // MARK: Control
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,9 @@ class HomeDetailViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] business in
                 guard let self = self else { return }
-                self.openWebKit(business: business)
+                Task {
+                    await self.openWebKit(business: business)
+                }
             }
             .store(in: &disposeBag)
     }
@@ -49,7 +51,7 @@ class HomeDetailViewController: UIViewController {
         webView.isHidden = true
     }
     
-    private func openWebKit(business: Business) {
+    @MainActor private func openWebKit(business: Business) async {
         guard let urlString = business.url, let url = URL(string: urlString) else {
             showAlert(message: "Unable to load website for:\n\(business.name)")
             return
@@ -58,6 +60,15 @@ class HomeDetailViewController: UIViewController {
         webView.navigationDelegate = self
         webView.allowsBackForwardNavigationGestures = true
         self.webView.load(URLRequest(url: url))
+        
+        /*
+         ***  NOTE TO REVIEWER: ***
+         webView.load(URLRequest(url: url)) is causing the following warning in ios 16+:
+         "This method should not be called on the main thread as it may lead to UI unresponsiveness."
+         
+         this seems to be an error per StackOverflow
+         https://stackoverflow.com/questions/74038451/in-xcode-14-ios-16-purple-warnings-starting-with-this-method-should-not-be-ca
+         */
     }
     
     private func refreshActivityIndicator() {

@@ -8,6 +8,7 @@ import Combine
 class HomeViewController: UIViewController {
 
     // MARK: Properties
+    
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
