@@ -146,7 +146,6 @@ class HomeViewController: UIViewController {
         guard let vc = storyboard.instantiateViewController(withIdentifier: "HomeDetailViewController") as? HomeDetailViewController else { return }
         
         vc.viewModel = HomeDetailViewModel(business: business)
-        vc.modalPresentationStyle = .overFullScreen
         navigationController?.pushViewController(vc, animated: true)
     }
     
