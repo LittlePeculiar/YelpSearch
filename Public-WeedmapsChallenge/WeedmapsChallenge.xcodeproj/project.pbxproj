@@ -31,6 +31,7 @@
 		A079B8AF2CB600F100C3B64E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8AE2CB600F100C3B64E /* Font.swift */; };
 		A079B8B12CB6023F00C3B64E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B02CB6023F00C3B64E /* TableViewCell.swift */; };
 		A079B8B32CB7475A00C3B64E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B22CB7475A00C3B64E /* View.swift */; };
+		A079B8B52CB7717600C3B64E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B42CB7717600C3B64E /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		A079B8AE2CB600F100C3B64E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		A079B8B02CB6023F00C3B64E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		A079B8B22CB7475A00C3B64E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		A079B8B42CB7717600C3B64E /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +278,7 @@
 				A079B8AE2CB600F100C3B64E /* Font.swift */,
 				A079B8B02CB6023F00C3B64E /* TableViewCell.swift */,
 				A079B8B22CB7475A00C3B64E /* View.swift */,
+				A079B8B42CB7717600C3B64E /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				A079B8A32CB5A04400C3B64E /* API.swift in Sources */,
 				A079B89C2CB59AD100C3B64E /* Constants.swift in Sources */,
 				A079B8A72CB5AFE500C3B64E /* HomeViewModel.swift in Sources */,
+				A079B8B52CB7717600C3B64E /* String.swift in Sources */,
 				A079B89F2CB59EC100C3B64E /* APIError.swift in Sources */,
 				5ABB147F2167C42300A2CB2C /* HomeViewController.swift in Sources */,
 				A079B8A12CB59EF400C3B64E /* APIService.swift in Sources */,
