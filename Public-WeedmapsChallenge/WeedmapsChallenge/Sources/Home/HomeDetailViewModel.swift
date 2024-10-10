@@ -7,24 +7,12 @@
 //
 
 import Foundation
-
-enum WebOption {
-    case openSafari, openWebkit
-    
-    var title: String {
-        switch self {
-            case .openSafari: return "Open Safari"
-            case .openWebkit: return "Open WebKit"
-        }
-    }
-}
+import Combine
 
 class HomeDetailViewModel {
-    @Published var webObtion: WebOption
-    var business: Business
+    @Published var business: Business
     
-    init(business: Business, webObtion: WebOption) {
+    init(business: Business) {
         self.business = business
-        self.webObtion = webObtion
     }
 }

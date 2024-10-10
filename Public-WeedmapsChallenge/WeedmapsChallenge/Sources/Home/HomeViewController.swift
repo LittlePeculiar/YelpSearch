@@ -81,7 +81,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setupUI() {
-        self.title = "Weedmap Challenge"
+        self.title = "Weedmaps"
         self.view.backgroundColor = UIColor.red
         
         searchController.searchResultsUpdater = self
@@ -126,13 +126,13 @@ class HomeViewController: UIViewController {
         
         // WKWebView
         let inApp = UIAlertAction(title: "Stay In App", style: .default) {  [weak self] (_) in
-            self?.loadWebDetails(business: business, webObtion: .openWebkit)
+            self?.loadWebDetails(business: business)
         }
         alert.addAction(inApp)
         
         // Safari.
         let safari = UIAlertAction(title: "Use Safari", style: .default) {  [weak self] (_) in
-            self?.loadWebDetails(business: business, webObtion: .openSafari)
+            self?.openSafari(business: business)
         }
         alert.addAction(safari)
         
@@ -143,13 +143,21 @@ class HomeViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func loadWebDetails(business: Business, webObtion: WebOption) {
+    private func loadWebDetails(business: Business) {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
         guard let vc = storyboard.instantiateViewController(withIdentifier: "HomeDetailViewController") as? HomeDetailViewController else { return }
         
-        vc.viewModel = HomeDetailViewModel(business: business, webObtion: webObtion)
+        vc.viewModel = HomeDetailViewModel(business: business)
         vc.modalPresentationStyle = .overFullScreen
-        navigationController?.present(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func openSafari(business: Business) {
+        guard let urlString = business.url, let url = URL(string: urlString) else {
+            showAlert(message: "Unable to load website for:\n\(business.name)")
+            return
+        }
+        UIApplication.shared.open(url)
     }
     
 }
@@ -183,7 +191,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             viewModel.offset = viewModel.displayBusinesses.count
-            print("todo: we hit the bottom at: \(indexPath)")
+            print("we hit the bottom at: \(indexPath)")
             
             Task {
                 self.view.endEditing(true)
