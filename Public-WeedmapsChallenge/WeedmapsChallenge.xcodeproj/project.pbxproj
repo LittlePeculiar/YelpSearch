@@ -32,6 +32,7 @@
 		A079B8B12CB6023F00C3B64E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B02CB6023F00C3B64E /* TableViewCell.swift */; };
 		A079B8B32CB7475A00C3B64E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B22CB7475A00C3B64E /* View.swift */; };
 		A079B8B52CB7717600C3B64E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B42CB7717600C3B64E /* String.swift */; };
+		A079B8B72CB7A20200C3B64E /* HomeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B62CB7A20200C3B64E /* HomeDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		A079B8B02CB6023F00C3B64E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		A079B8B22CB7475A00C3B64E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A079B8B42CB7717600C3B64E /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		A079B8B62CB7A20200C3B64E /* HomeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 			children = (
 				5ABB14C32167D51000A2CB2C /* Home.storyboard */,
 				5ABB14BB2167CF2400A2CB2C /* HomeDetailViewController.swift */,
+				A079B8B62CB7A20200C3B64E /* HomeDetailViewModel.swift */,
 				5ABB147E2167C42300A2CB2C /* HomeViewController.swift */,
 				A079B8A62CB5AFE500C3B64E /* HomeViewModel.swift */,
 			);
@@ -435,6 +438,7 @@
 				A079B89F2CB59EC100C3B64E /* APIError.swift in Sources */,
 				5ABB147F2167C42300A2CB2C /* HomeViewController.swift in Sources */,
 				A079B8A12CB59EF400C3B64E /* APIService.swift in Sources */,
+				A079B8B72CB7A20200C3B64E /* HomeDetailViewModel.swift in Sources */,
 				5ABB14BC2167CF2400A2CB2C /* HomeDetailViewController.swift in Sources */,
 				A079B8A92CB5C51400C3B64E /* LocationManager.swift in Sources */,
 			);

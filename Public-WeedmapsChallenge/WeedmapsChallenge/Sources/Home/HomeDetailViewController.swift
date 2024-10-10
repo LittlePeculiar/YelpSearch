@@ -12,6 +12,8 @@ class HomeDetailViewController: UIViewController {
     
     @IBOutlet private var webView: WKWebView!
     
+    var viewModel: HomeDetailViewModel?
+    
     // MARK: Control
     
     func configure(with business: Business) {

@@ -23,7 +23,6 @@ class HomeViewModel {
     var searchTerm: String = ""
     var offset: Int = 0
     
-    
     init() {
         locationManager.delegate = self
     }
@@ -56,6 +55,8 @@ class HomeViewModel {
                     let new = data.sorted(by: {
                         return $0.name < $1.name
                     })
+                    
+                    // keep copy for resetting without calling api again
                     if businesses.isEmpty {
                         businesses = new
                         resetDisplayData()

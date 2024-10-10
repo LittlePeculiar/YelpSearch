@@ -90,6 +90,7 @@ class HomeViewController: UIViewController {
     }
     
     private func showError(isError: Bool) {
+        // error from api
         if isError {
             let title = "Oops! Something went wrong!"
             let message = viewModel.errorMessage
@@ -146,8 +147,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 extension HomeViewController: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
+        // do not want to call api for each char
 //        guard let term = searchController.searchBar.text else { return }
-//        print(term)
     }
 }
 
