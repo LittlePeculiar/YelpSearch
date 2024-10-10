@@ -19,8 +19,10 @@ class HomeViewModel {
     private var businesses: [Business] = []
     
     var api: APIService = API()
-    var errorMessage: String = ""
+    var errorMessage: String = "please try again later"
     var searchTerm: String = ""
+    var offset: Int = 0
+    
     
     init() {
         locationManager.delegate = self
@@ -30,14 +32,14 @@ class HomeViewModel {
     @MainActor func fetch(_ term: String = "") async {
         do {
             searchTerm = term
-            
+            isLoading = true
             let results = try await api.fetchData(
                 payloadType: BusinessResponse.self,
                 from: APIEndpoint.searchBy(
                     term: term,
                     latitude: coords.latitude,
                     longitude: coords.longitude,
-                    offset: displayBusinesses.count
+                    offset: offset
                 )
             )
             switch results {
@@ -74,6 +76,8 @@ class HomeViewModel {
     }
     
     func resetDisplayData() {
+        offset = 0
+        searchTerm = ""
         displayBusinesses = businesses
     }
     

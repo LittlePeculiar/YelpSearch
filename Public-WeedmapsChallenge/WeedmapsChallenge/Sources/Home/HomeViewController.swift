@@ -14,6 +14,10 @@ class HomeViewController: UIViewController {
     private var searchController = UISearchController(searchResultsController: nil)
     private let viewModel = HomeViewModel()
     private var disposeBag = [AnyCancellable]()
+    private var isSearching: Bool {
+        let text = self.searchController.searchBar.text ?? ""
+        return self.searchController.isActive && !text.isEmpty
+    }
     
     // MARK: Lifecycle
     
@@ -40,7 +44,8 @@ class HomeViewController: UIViewController {
         viewModel.$displayBusinesses
             .receive(on: DispatchQueue.main)
             .sink { [weak self] businesses in
-                if businesses.isEmpty {
+                let searching = self?.isSearching ?? false
+                if businesses.isEmpty && searching {
                     let message = "No results found\nPlease try your search again"
                     self?.showAlert(message: message)
                 }
@@ -87,7 +92,7 @@ class HomeViewController: UIViewController {
     private func showError(isError: Bool) {
         if isError {
             let title = "Oops! Something went wrong!"
-            let message = "please try again later"
+            let message = viewModel.errorMessage
             showAlert(title: title, message: message)
         }
     }
@@ -99,18 +104,6 @@ class HomeViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-}
-
-// MARK: UISearchResultsUpdating
-
-extension HomeViewController: UISearchResultsUpdating {
-
-    func updateSearchResults(for searchController: UISearchController) {
-        // IMPLEMENT: Be sure to consider things like network errors
-        // and possible rate limiting from the Yelp API. If the user types
-        // very quickly, how will you prevent unnecessary requests from firing
-        // off?
-    }
 }
 
 // MARK: - Table view data source
@@ -139,7 +132,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         print("selecting: \(business.name)")
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            viewModel.offset = viewModel.displayBusinesses.count
+            print("todo: we hit the bottom")
+        }
+    }
     
+}
+
+// MARK: UISearchResultsUpdating
+
+extension HomeViewController: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+//        guard let term = searchController.searchBar.text else { return }
+//        print(term)
+    }
 }
 
 // MARK: UISearchBarDelegate
@@ -158,18 +167,20 @@ extension HomeViewController: UISearchBarDelegate {
             self.showAlert(message: message)
             return
         }
+        
+        // only do search when search button is pressed
         Task {
+            self.view.endEditing(true)
             await viewModel.fetch(term)
         }
-
     }
     
     //This is when the user clicks the 'x' button in the search bar
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
+            self.view.endEditing(true)
             viewModel.resetDisplayData()
         }
-        
     }
     
 }
