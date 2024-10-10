@@ -14,27 +14,14 @@ class HomeViewModel {
     @Published var isLoading: Bool = true
     @Published var showError: Bool = false
     
-    private var api: APIService = API()
     private var locationManager = LocationManager.shared
     private var coords = Coordinates()
+    
+    var api: APIService = API()
     var errorMessage: String = ""
     
     init() {
-        Task {
-            await locationManager.requestAuthorization()
-        }
-    }
-    
-    // fetch by current location
-    @MainActor func getCurrentLocation() async {
-        do {
-            self.coords = try await locationManager.getLocation()
-            await fetch()
-        } catch let error {
-            errorMessage = error.localizedDescription
-            showError = true
-            print("error fetching coords: \(errorMessage)")
-        }
+        locationManager.delegate = self
     }
     
     // fetch by current location
@@ -74,4 +61,14 @@ class HomeViewModel {
         }
     }
     
+}
+
+extension HomeViewModel: LocationManagerDelegate {
+    func handleLocationUpdates(coords: Coordinates?) {
+        guard let newCoords = coords else { return }
+        self.coords = Coordinates(latitude: newCoords.latitude, longitude: newCoords.longitude)
+        Task {
+            await fetch()
+        }
+    }
 }

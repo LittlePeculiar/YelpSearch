@@ -30,6 +30,7 @@
 		A079B8AC2CB5C6CA00C3B64E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8AB2CB5C6CA00C3B64E /* LocationService.swift */; };
 		A079B8AF2CB600F100C3B64E /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8AE2CB600F100C3B64E /* Font.swift */; };
 		A079B8B12CB6023F00C3B64E /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B02CB6023F00C3B64E /* TableViewCell.swift */; };
+		A079B8B32CB7475A00C3B64E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A079B8B22CB7475A00C3B64E /* View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		A079B8AB2CB5C6CA00C3B64E /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		A079B8AE2CB600F100C3B64E /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		A079B8B02CB6023F00C3B64E /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		A079B8B22CB7475A00C3B64E /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 			children = (
 				A079B8AE2CB600F100C3B64E /* Font.swift */,
 				A079B8B02CB6023F00C3B64E /* TableViewCell.swift */,
+				A079B8B22CB7475A00C3B64E /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -417,6 +420,7 @@
 				A079B8B12CB6023F00C3B64E /* TableViewCell.swift in Sources */,
 				5ABB14BE2167D2D900A2CB2C /* BusinessCell.swift in Sources */,
 				A079B8AF2CB600F100C3B64E /* Font.swift in Sources */,
+				A079B8B32CB7475A00C3B64E /* View.swift in Sources */,
 				A079B8992CB5929900C3B64E /* APIEndpoint.swift in Sources */,
 				A079B8A52CB5A3DA00C3B64E /* MockAPI.swift in Sources */,
 				5ABB14B52167C6EB00A2CB2C /* Business.swift in Sources */,

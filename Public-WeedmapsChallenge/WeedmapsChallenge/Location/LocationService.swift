@@ -21,5 +21,5 @@ struct Coordinates {
 }
 
 protocol LocationService {
-  func getLocation() async throws -> Coordinates
+  func getLocation() async
 }

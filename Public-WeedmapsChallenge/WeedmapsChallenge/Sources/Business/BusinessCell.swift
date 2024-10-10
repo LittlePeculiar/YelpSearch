@@ -13,20 +13,23 @@ class BusinessCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var phoneTitleLabel: UILabel!
     @IBOutlet weak var isClosedLabel: UILabel!
     @IBOutlet weak var yelpDescription: UILabel!
     @IBOutlet weak var phoneNumberView: UIView!
+    @IBOutlet weak var bgView: UIView!
     
     weak var delegate: BusinessCellDelegate?
     private var phoneNumber: String = ""
     
-    func configure(business: Business) {
-        yelpImageView.image = fetchImage(url: business.imageURL)
+    func configure(api: APIService, business: Business) {
+        
         nameLabel.text = business.name
         ratingLabel.text = "Rating: \(business.rating)"
         
         if let number = business.phone, !number.isEmpty {
-            phoneLabel.text = "Phone: \(number)"
+            phoneLabel.text = "\(number)"
+            phoneLabel.textColor = .blue
             phoneNumber = number
             phoneNumberView.isHidden = false
         }
@@ -45,6 +48,10 @@ class BusinessCell: UITableViewCell {
         // remove the comma
         string.removeLast()
         yelpDescription.text = string
+        
+        Task {
+            await yelpImageView.image = fetchImage(api: api, imageURL: business.imageURL)
+        }
     }
     
     override func awakeFromNib() {
@@ -59,19 +66,33 @@ class BusinessCell: UITableViewCell {
         nameLabel.text = nil
         ratingLabel.text = nil
         yelpDescription.text = nil
+        phoneLabel.text = nil
+        isClosedLabel.text = nil
     }
     
     private func setupUI() {
+        bgView.layer.cornerRadius = 10
+        bgView.layer.masksToBounds = true
         phoneNumberView.isHidden = true
         
         // set preferred font
         nameLabel.font = UIFont.preferredFont(forTextStyle: .headline, weight: .medium, maxSize: 16)
         ratingLabel.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium, maxSize: 13)
         yelpDescription.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium, maxSize: 13)
+        phoneLabel.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium, maxSize: 13)
+        phoneTitleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium, maxSize: 13)
+        isClosedLabel.font = UIFont.preferredFont(forTextStyle: .subheadline, weight: .medium, maxSize: 13)
     }
     
-    private func fetchImage(url: String?) -> UIImage {
-        
+    @MainActor func fetchImage(api: APIService, imageURL: String?) async -> UIImage? {
+        guard let url = imageURL else { return nil }
+        do {
+            let image = try await api.fetchImage(urlPath: url)
+            return image
+        } catch let error {
+            print("error fetching image: \(url) :: \(error.localizedDescription)")
+        }
+        return nil
     }
     
     @IBAction func callBusiness(_ sender: Any) {

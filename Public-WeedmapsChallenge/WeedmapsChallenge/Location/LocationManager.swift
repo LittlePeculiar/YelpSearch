@@ -9,8 +9,13 @@
 import Foundation
 import CoreLocation
 
+protocol LocationManagerDelegate: AnyObject {
+    func handleLocationUpdates(coords: Coordinates?)
+}
+
 class LocationManager: NSObject, LocationService {
     static let shared = LocationManager()
+    weak var delegate: LocationManagerDelegate?
     
     private let locationManager = CLLocationManager()
     private var location: CLLocation?
@@ -20,43 +25,60 @@ class LocationManager: NSObject, LocationService {
 
     override init() {
         super.init()
+        
         locationManager.delegate = self
+        Task {
+            await requestAuthorization()
+        }
     }
     
     func requestAuthorization() async {
         locationManager.requestWhenInUseAuthorization()
     }
     
-    func getLocation() async throws -> Coordinates {
-        guard let last = self.location else {
-            return defaultCoords
+    func getLocation() async {
+        var coords = defaultCoords
+        
+        if let last = self.location {
+            coords = Coordinates(
+                latitude: last.coordinate.latitude,
+                longitude: last.coordinate.longitude
+            )
         }
-        let coords = Coordinates(latitude: last.coordinate.latitude, longitude: last.coordinate.longitude)
-        return coords
+        
+        print("Location: \(coords)")
+        delegate?.handleLocationUpdates(coords: coords)
     }
 
 }
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.last
         locationManager.stopUpdatingLocation()
+        
+        Task {
+            location = locations.last
+            await getLocation()
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LocationManager failed: \(error.localizedDescription)")
+        delegate?.handleLocationUpdates(coords: defaultCoords)
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        Task {
-            switch status {
-                case .notDetermined:
+        
+        switch status {
+            case .notDetermined:
+               Task {
                    await requestAuthorization()
-                case .authorizedAlways, .authorizedWhenInUse:
-                   locationManager.startUpdatingLocation()
-                default:
-                   self.location = nil
-            }
+               }
+            case .authorizedAlways, .authorizedWhenInUse:
+               locationManager.startUpdatingLocation()
+            default:
+               delegate?.handleLocationUpdates(coords: defaultCoords)
         }
+        
     }
 }

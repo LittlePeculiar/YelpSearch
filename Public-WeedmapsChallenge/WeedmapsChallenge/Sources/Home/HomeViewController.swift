@@ -24,19 +24,11 @@ class HomeViewController: UIViewController {
         setupBinding()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        Task {
-            await viewModel.getCurrentLocation()
-        }
-    }
-    
     private func registerCells() {
         BusinessCell.registerWith(tableView: tableView)
         
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 150
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -99,26 +91,38 @@ extension HomeViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: UICollectionViewDelegate
-
-extension HomeViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // IMPLEMENT:
-        // Present the user with a UIAlertController (action sheet style) with options
-        // to either display the Business's Yelp page in a WebView OR bump the user out to
-        // Safari. Both options should display the Business's Yelp page details
-    }
-}
-
 // MARK: - Table view data source
-// note: using tableview instead of collectionview per figma
+// note: using tableview instead of collectionview - better fits figma design
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.businesses.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
+        guard let cell = tableView.dequeueReusableCell(
+                 withIdentifier: "BusinessCell",
+                 for: indexPath
+              ) as? BusinessCell else { return UITableViewCell() }
+        
+        cell.delegate = self
+        
+        let business = viewModel.businesses[indexPath.row]
+        cell.configure(api: viewModel.api, business: business)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let business = viewModel.businesses[indexPath.row]
+        print("selecting: \(business.name)")
+    }
+    
+    
+}
+
+extension HomeViewController: BusinessCellDelegate {
+    func calling(number: String) {
+        print("todo: calling \(number)")
     }
     
     

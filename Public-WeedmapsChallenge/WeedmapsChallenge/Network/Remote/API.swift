@@ -50,11 +50,6 @@ extension API {
                 }
                 switch response.statusCode {
                 case 200...299:
-                    let str = String(decoding: result.data, as: UTF8.self)
-                    print("************")
-                    print("payload: \(payloadType)")
-                    print("rawData: \(str)")
-                    print("************")
                     guard let decodedResponse = try? decoder.decode(payloadType, from: result.data) else {
                         return .failure(.decodingError)
                     }
