@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v9M-4a-ST7">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home-->
+        <scene sceneID="jJP-1j-kg8">
+            <objects>
+                <navigationController id="v9M-4a-ST7" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="first" id="Yc6-Om-qOz"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wec-IV-yoN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y99-8g-iC3" kind="relationship" relationship="rootViewController" id="hnO-J5-BNI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M8Z-UD-Vx2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1175" y="3"/>
+        </scene>
+        <!--Home View Controller-->
+        <scene sceneID="C0t-B9-QU3">
+            <objects>
+                <viewController storyboardIdentifier="HomeViewController" id="Y99-8g-iC3" customClass="HomeViewController" customModule="WeedmapsChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tU4-XT-RHp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Etz-L7-nVK">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="cA6-XR-Mg3">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="cA6-XR-Mg3" secondAttribute="bottom" id="NMO-bj-chz"/>
+                                    <constraint firstItem="cA6-XR-Mg3" firstAttribute="leading" secondItem="Etz-L7-nVK" secondAttribute="leading" id="h8e-fR-eEc"/>
+                                    <constraint firstItem="cA6-XR-Mg3" firstAttribute="top" secondItem="Etz-L7-nVK" secondAttribute="top" id="qde-Q4-ZYt"/>
+                                    <constraint firstAttribute="trailing" secondItem="cA6-XR-Mg3" secondAttribute="trailing" id="rpW-vv-djH"/>
+                                </constraints>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="0dq-Ql-NWw">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="SsX-Ve-kCn"/>
+                        <constraints>
+                            <constraint firstItem="0dq-Ql-NWw" firstAttribute="centerY" secondItem="tU4-XT-RHp" secondAttribute="centerY" id="5px-zf-Xmj"/>
+                            <constraint firstItem="Etz-L7-nVK" firstAttribute="leading" secondItem="tU4-XT-RHp" secondAttribute="leading" id="7zJ-mW-zWI"/>
+                            <constraint firstAttribute="bottom" secondItem="Etz-L7-nVK" secondAttribute="bottom" id="Lsg-qy-FAP"/>
+                            <constraint firstItem="0dq-Ql-NWw" firstAttribute="centerX" secondItem="tU4-XT-RHp" secondAttribute="centerX" id="UqI-T4-QIg"/>
+                            <constraint firstAttribute="trailing" secondItem="Etz-L7-nVK" secondAttribute="trailing" id="W5W-MT-zeE"/>
+                            <constraint firstItem="Etz-L7-nVK" firstAttribute="top" secondItem="tU4-XT-RHp" secondAttribute="top" id="oZt-bt-6V0"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="TnG-pJ-5IY"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="0dq-Ql-NWw" id="fEI-yS-XVk"/>
+                        <outlet property="tableView" destination="cA6-XR-Mg3" id="KLt-It-JlA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XIJ-E0-LPc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-415" y="2"/>
+        </scene>
+        <!--Home Detail View Controller-->
+        <scene sceneID="eoD-OF-pE0">
+            <objects>
+                <viewController storyboardIdentifier="HomeDetailViewController" id="YJ8-U5-Xwm" customClass="HomeDetailViewController" customModule="WeedmapsChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9pc-f2-ZOe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0v-Hi-RdD">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5oY-1E-dMb">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <wkWebViewConfiguration key="configuration">
+                                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                            <wkPreferences key="preferences"/>
+                                        </wkWebViewConfiguration>
+                                    </wkWebView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5oY-1E-dMb" secondAttribute="bottom" id="Jjs-pC-qjD"/>
+                                    <constraint firstItem="5oY-1E-dMb" firstAttribute="leading" secondItem="S0v-Hi-RdD" secondAttribute="leading" id="VaB-hK-swb"/>
+                                    <constraint firstAttribute="trailing" secondItem="5oY-1E-dMb" secondAttribute="trailing" id="cxS-jq-JJ0"/>
+                                    <constraint firstItem="5oY-1E-dMb" firstAttribute="top" secondItem="S0v-Hi-RdD" secondAttribute="top" id="reL-JT-STl"/>
+                                </constraints>
+                            </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="3KL-T6-VLM">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="DvJ-om-Xje"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="3KL-T6-VLM" firstAttribute="centerX" secondItem="9pc-f2-ZOe" secondAttribute="centerX" id="9Lb-eX-ZaI"/>
+                            <constraint firstItem="S0v-Hi-RdD" firstAttribute="leading" secondItem="DvJ-om-Xje" secondAttribute="leading" id="Sfp-hS-dw9"/>
+                            <constraint firstItem="DvJ-om-Xje" firstAttribute="trailing" secondItem="S0v-Hi-RdD" secondAttribute="trailing" id="UIO-2o-JZk"/>
+                            <constraint firstItem="S0v-Hi-RdD" firstAttribute="top" secondItem="DvJ-om-Xje" secondAttribute="top" id="dds-2N-uQh"/>
+                            <constraint firstItem="3KL-T6-VLM" firstAttribute="centerY" secondItem="9pc-f2-ZOe" secondAttribute="centerY" id="lGd-RW-YfW"/>
+                            <constraint firstItem="DvJ-om-Xje" firstAttribute="bottom" secondItem="S0v-Hi-RdD" secondAttribute="bottom" id="mmB-Jy-ulQ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="3KL-T6-VLM" id="rhv-QI-yze"/>
+                        <outlet property="webView" destination="5oY-1E-dMb" id="WV8-XJ-z0K"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vGw-AE-Gyl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="282" y="1"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="first" width="30" height="30"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
